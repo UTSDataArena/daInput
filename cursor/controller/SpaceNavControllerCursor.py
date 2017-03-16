@@ -18,6 +18,20 @@ class SpaceNavControllerCursor(ControllerCursor):
 
     def on_move(self, event):
 
+        # This cursor currently makes use of the x and y motion channels of the
+        # spacenav VRPN input events only. These events actually contain values
+        # for all 6 input channels of the device, which are as follows:
+        #
+        #   0 - x (left/right)
+        #   1 - y (forward/back)
+        #   2 - z (up/down)
+        #   3 - pitch (tilt forward/back)
+        #   4 - roll (tilt left/right)
+        #   5 - yaw (twist left/right)
+        #
+        # The raw VRPN output is stored within the event extra data properties
+        # by omegalib.
+
         if event.getExtraDataItems() >= 2:
 
             dx = event.getExtraDataFloat(0)
