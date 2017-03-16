@@ -8,7 +8,7 @@ from daInput.cursor.controller.ControllerCursor import ControllerCursor
 
 class SpaceNavControllerCursor(ControllerCursor):
 
-    MOTION_MULTIPLIER = 3   # spacenav motion is very fine-grained
+    MOTION_MULTIPLIER = 0.01   # scaling factor
 
     def __init__(self, id, user_id, cursor_up_image_path, cursor_down_image_path, ui_context):
         super(SpaceNavControllerCursor, self).__init__(id, user_id, cursor_up_image_path, cursor_down_image_path, ui_context)
@@ -37,10 +37,10 @@ class SpaceNavControllerCursor(ControllerCursor):
             dx = event.getExtraDataFloat(0)
             dy = event.getExtraDataFloat(1)
 
-            x = self.cursor.getPosition().x + (dx * SpaceNavControllerCursor.MOTION_MULTIPLIER)
-            y = self.cursor.getPosition().y + (dy * SpaceNavControllerCursor.MOTION_MULTIPLIER)
+            x = self.get_coordinates().x + (dx * SpaceNavControllerCursor.MOTION_MULTIPLIER)
+            y = self.get_coordinates().y + (dy * SpaceNavControllerCursor.MOTION_MULTIPLIER)
 
-            self.set_position(Vector2(x, y))
+            self.set_coordinates(Vector2(x, y))
 
     def on_button_up(self, event):
         super(SpaceNavControllerCursor, self).on_button_up(event)

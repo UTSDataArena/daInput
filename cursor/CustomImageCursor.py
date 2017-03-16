@@ -2,10 +2,10 @@ from euclid import *
 from omega import *
 from omegaToolkit import *
 
-from daInput.cursor.Cursor import Cursor
+from daInput.cursor.NormalisedCoordinatesCursor import NormalisedCoordinatesCursor
 
 
-class CustomImageCursor(Cursor):
+class CustomImageCursor(NormalisedCoordinatesCursor):
 
     @staticmethod
     def load_image(path):
@@ -19,7 +19,7 @@ class CustomImageCursor(Cursor):
         self.user_id = user_id
 
         self.cursor = Image.create(self.ui_context.container)
-        self.cursor.setSize(Vector2(Cursor.DEFAULT_SIZE, Cursor.DEFAULT_SIZE))
+        self.cursor.setSize(Vector2(CustomImageCursor.DEFAULT_SIZE, CustomImageCursor.DEFAULT_SIZE))
 
         self.cursor_up_image = CustomImageCursor.load_image(cursor_up_image_path)
         self.cursor_down_image = CustomImageCursor.load_image(cursor_down_image_path)
@@ -34,7 +34,20 @@ class CustomImageCursor(Cursor):
         return self.cursor.getPosition()
 
     def set_position(self, position):
-        self.cursor.setPosition(position)
+        dimensions = self.ui_context.container.getSize()
+        coordinates = Vector2(position.x / dimensions[0], position.y / dimensions[1])
+
+        if NormalisedCoordinatesCursor.is_normalised(coordinates):
+            self.cursor.setPosition(position)
+
+            super(CustomImageCursor, self).set_coordinates(coordinates)
+
+    def set_coordinates(self, coordinates):
+        if NormalisedCoordinatesCursor.is_normalised(coordinates):
+            super(CustomImageCursor, self).set_coordinates(coordinates)
+
+            dimensions = self.ui_context.container.getSize()
+            self.cursor.setPosition(Vector2(dimensions[0] * self.coordinates.x, dimensions[1] * self.coordinates.y))
 
     def on_move(self, event):
         raise NotImplementedError
