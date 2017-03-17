@@ -1,10 +1,10 @@
 from omega import *
 from omegaToolkit import *
 
-from daInput.cursor.CustomImageCursor import CustomImageCursor
+from daInput.cursor.CustomGeometryCursor import CustomGeometryCursor
 
 
-class ControllerCursor(CustomImageCursor):
+class ControllerCursor(CustomGeometryCursor):
     """
     Base class for all cursors of the controller type.
     """
@@ -13,8 +13,8 @@ class ControllerCursor(CustomImageCursor):
     def is_interested(event):
         return event.getServiceType() == ServiceType.Controller
 
-    def __init__(self, id, user_id, cursor_up_image_path, cursor_down_image_path, ui_context):
-        super(ControllerCursor, self).__init__(id, user_id, cursor_up_image_path, cursor_down_image_path, ui_context)
+    def __init__(self, id, user_id, geometry):
+        super(ControllerCursor, self).__init__(id, user_id, geometry)
 
     def on_event(self, event):
 

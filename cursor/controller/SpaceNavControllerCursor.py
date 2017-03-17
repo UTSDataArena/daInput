@@ -8,39 +8,42 @@ from daInput.cursor.controller.ControllerCursor import ControllerCursor
 
 class SpaceNavControllerCursor(ControllerCursor):
 
-    MOTION_MULTIPLIER = 0.01   # scaling factor
+    MOTION_MULTIPLIER = 0.05   # scaling factor
+    DAMPENING_FACTOR = 0.005   # dampen jitter caused by poor device calibration
 
-    def __init__(self, id, user_id, cursor_up_image_path, cursor_down_image_path, ui_context):
-        super(SpaceNavControllerCursor, self).__init__(id, user_id, cursor_up_image_path, cursor_down_image_path, ui_context)
+    def __init__(self, id, user_id, geometry):
+        super(SpaceNavControllerCursor, self).__init__(id, user_id, geometry)
 
         self.button1Pressed = False
         self.button2Pressed = False
 
+        self.pitch_locked = True
+        self.roll_locked = True
+        self.yaw_locked = True
+
     def on_move(self, event):
 
-        # This cursor currently makes use of the x and y motion channels of the
-        # spacenav VRPN input events only. These events actually contain values
-        # for all 6 input channels of the device, which are as follows:
-        #
-        #   0 - x (left/right)
-        #   1 - y (forward/back)
-        #   2 - z (up/down)
-        #   3 - pitch (tilt forward/back)
-        #   4 - roll (tilt left/right)
-        #   5 - yaw (twist left/right)
-        #
-        # The raw VRPN output is stored within the event extra data properties
-        # by omegalib.
+        if event.getExtraDataItems() >= 3:
 
-        if event.getExtraDataItems() >= 2:
+            dx = event.getExtraDataFloat(0) * SpaceNavControllerCursor.MOTION_MULTIPLIER
+            dy = event.getExtraDataFloat(1) * SpaceNavControllerCursor.MOTION_MULTIPLIER
+            dz = event.getExtraDataFloat(2) * SpaceNavControllerCursor.MOTION_MULTIPLIER
 
-            dx = event.getExtraDataFloat(0)
-            dy = event.getExtraDataFloat(1)
+            if abs(dx) >= SpaceNavControllerCursor.DAMPENING_FACTOR or abs(dy) >= SpaceNavControllerCursor.DAMPENING_FACTOR or abs(dz) >= SpaceNavControllerCursor.DAMPENING_FACTOR:
+                self.translate(dx, -dy, dz)  # invert the y-axis
 
-            x = self.get_coordinates().x + (dx * SpaceNavControllerCursor.MOTION_MULTIPLIER)
-            y = self.get_coordinates().y + (dy * SpaceNavControllerCursor.MOTION_MULTIPLIER)
+            pitch = event.getExtraDataFloat(3)
+            roll = event.getExtraDataFloat(4)
+            yaw = event.getExtraDataFloat(5)
 
-            self.set_coordinates(Vector2(x, y))
+            if not self.pitch_locked and abs(pitch) >= SpaceNavControllerCursor.DAMPENING_FACTOR:
+                self.pitch(pitch)
+
+            if not self.roll_locked and abs(roll) >= SpaceNavControllerCursor.DAMPENING_FACTOR:
+                self.roll(roll)
+
+            if not self.yaw_locked and abs(yaw) >= SpaceNavControllerCursor.DAMPENING_FACTOR:
+                self.yaw(yaw)
 
     def on_button_up(self, event):
         super(SpaceNavControllerCursor, self).on_button_up(event)
