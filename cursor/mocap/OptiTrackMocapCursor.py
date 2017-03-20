@@ -8,8 +8,8 @@ from daInput.cursor.mocap.MocapCursor import MocapCursor
 
 class OptiTrackMocapCursor(MocapCursor):
 
-    def __init__(self, id, user_id, cursor_up_image_path, cursor_down_image_path, ui_context):
-        super(OptiTrackMocapCursor, self).__init__(id, user_id, cursor_up_image_path, cursor_down_image_path, ui_context)
+    def __init__(self, id, user_id, geometry, ui_context):
+        super(OptiTrackMocapCursor, self).__init__(id, user_id, geometry, ui_context)
 
     def on_move(self, event):
 
@@ -17,10 +17,12 @@ class OptiTrackMocapCursor(MocapCursor):
 
             # TODO: this implementation is a guess - confirm actual behaviour
 
-            x = event.getExtraDataInt(0)
-            y = event.getExtraDataInt(1)
+            current = self.get_position()
 
-            self.set_position(Vector2(x, y))
+            dx = event.getPosition().x - current.x
+            dy = event.getPosition().y - current.y
+
+            self.translate(dx, dy)  # TODO: do we need to invert the y-axis?
 
     def on_button_up(self, event):
         super(OptiTrackMocapCursor, self).on_button_up(event)
