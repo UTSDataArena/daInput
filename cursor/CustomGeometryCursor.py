@@ -22,6 +22,9 @@ class CustomGeometryCursor(NormalisedCoordinatesCursor):
     def get_user_id(self):
         return self.user_id
 
+    def get_position(self):
+        return self.geometry.getPosition()
+
     def translate(self, dx, dy):
 
         translation = Vector3(0, 0, 0)
