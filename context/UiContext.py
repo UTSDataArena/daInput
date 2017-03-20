@@ -9,13 +9,21 @@ class UiContext(object):
 
     DEFAULT_CAMERA_FOV = 34.7
 
+    @staticmethod
+    def calculate_aspect():
+        config = getDisplayConfig()
+        size = getDisplayPixelSize()
+
+        width = float(size[0]) / 2 if config.stereoMode == StereoMode.SideBySide else float(size[0])
+        height = float(size[1]) / 2 if config.stereoMode == StereoMode.TopBottom else float(size[1])
+
+        return width / height
+
     def __init__(self):
         super(UiContext, self).__init__()
 
-        size = getDisplayPixelSize()
-
         self.fov = UiContext.DEFAULT_CAMERA_FOV
-        self.aspect = size[0] / float(size[1])
+        self.aspect = UiContext.calculate_aspect()
 
         self.pointer = MousePointerCursor('mouse')
         self.cursors = []
