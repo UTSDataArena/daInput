@@ -13,8 +13,8 @@ class ControllerCursor(CustomGeometryCursor):
     def is_interested(event):
         return event.getServiceType() == ServiceType.Controller
 
-    def __init__(self, id, user_id, geometry):
-        super(ControllerCursor, self).__init__(id, user_id, geometry)
+    def __init__(self, id, user_id, geometry, ui_context):
+        super(ControllerCursor, self).__init__(id, user_id, geometry, ui_context)
 
     def on_event(self, event):
 

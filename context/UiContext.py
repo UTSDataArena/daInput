@@ -7,25 +7,18 @@ from daInput.cursor.pointer.MousePointerCursor import MousePointerCursor
 
 class UiContext(object):
 
+    DEFAULT_CAMERA_FOV = 34.7
+
     def __init__(self):
         super(UiContext, self).__init__()
 
-        self.ui = None
-        self.container = None
+        size = getDisplayPixelSize()
+
+        self.fov = UiContext.DEFAULT_CAMERA_FOV
+        self.aspect = size[0] / float(size[1])
 
         self.pointer = MousePointerCursor('mouse')
         self.cursors = []
-
-        self.build()
-
-    def build(self):
-        self.ui = UiModule.createAndInitialize()
-
-        size = getDisplayPixelSize()
-
-        self.container = Container.create(ContainerLayout.LayoutFree, self.ui.getUi())
-        self.container.setAutosize(False)
-        self.container.setSize(Vector2(size[0], size[1]))
 
     def get_cursor(self, event):
         for cursor in self.cursors:
