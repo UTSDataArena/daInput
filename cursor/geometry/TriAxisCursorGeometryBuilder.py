@@ -7,7 +7,7 @@ from daInput.cursor.geometry.CursorGeometryBuilder import CursorGeometryBuilder
 
 class TriAxisCursorGeometryBuilder(CursorGeometryBuilder):
 
-    DEFAULT_LENGTH = 0.5
+    DEFAULT_LENGTH = 0.25
     DEFAULT_RADIUS1 = 0.01
     DEFAULT_RADIUS2 = 0.01
     DEFAULT_SUBDIVISIONS = 1
@@ -55,15 +55,17 @@ class TriAxisCursorGeometryBuilder(CursorGeometryBuilder):
         cursor.addChild(y)
         cursor.addChild(z)
 
+        half_length = self.length * 0.5
+
         x.setEffect('colored -d red')
-        x.translate(Vector3(-0.25, 0, 0), Space.Local)
+        x.translate(Vector3(-half_length, 0, 0), Space.Local)
         x.rotate(Vector3(0, 1, 0), math.radians(90), Space.Parent)
 
         y.setEffect('colored -d green')
-        y.translate(Vector3(0, -0.25, 0), Space.Local)
+        y.translate(Vector3(0, -half_length, 0), Space.Local)
         y.rotate(Vector3(1, 0, 0), math.radians(-90), Space.Parent)
 
         z.setEffect('colored -d blue')
-        z.translate(Vector3(0, 0, -0.25), Space.Local)
+        z.translate(Vector3(0, 0, -half_length), Space.Local)
 
         return cursor
