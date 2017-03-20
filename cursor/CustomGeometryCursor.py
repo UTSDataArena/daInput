@@ -25,6 +25,13 @@ class CustomGeometryCursor(NormalisedCoordinatesCursor):
     def get_position(self):
         return self.geometry.getPosition()
 
+    def get_direction(self, camera):
+        direction = self.get_position() - camera.getHeadOffset()
+        direction = camera.getOrientation() * direction
+        direction.normalize()
+
+        return direction
+
     def translate(self, dx, dy):
 
         translation = Vector3(0, 0, 0)
