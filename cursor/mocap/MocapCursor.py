@@ -2,10 +2,10 @@ from euclid import *
 from omega import *
 from omegaToolkit import *
 
-from daInput.cursor.CustomImageCursor import CustomImageCursor
+from daInput.cursor.CustomGeometryCursor import CustomGeometryCursor
 
 
-class MocapCursor(CustomImageCursor):
+class MocapCursor(CustomGeometryCursor):
     """
     Base class for all cursors of the mocap type.
     """
@@ -16,8 +16,8 @@ class MocapCursor(CustomImageCursor):
     def is_interested(event):
         return event.getServiceType() == ServiceType.Mocap
 
-    def __init__(self, id, user_id, cursor_up_image_path, cursor_down_image_path, ui_context):
-        super(MocapCursor, self).__init__(id, user_id, cursor_up_image_path, cursor_down_image_path, ui_context)
+    def __init__(self, id, user_id, geometry, ui_context):
+        super(MocapCursor, self).__init__(id, user_id, geometry, ui_context)
 
         # motion capture tracking markers have no button, so we simulate a button
         # press by turning the tracking marker upside down and keeping track of
