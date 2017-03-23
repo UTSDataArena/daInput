@@ -1,6 +1,6 @@
 from cyclops import *
 
-from daInput.cursor.geometry.CursorGeometryBuilder import CursorGeometryBuilder
+from daInput.geometry.CursorGeometryBuilder import CursorGeometryBuilder
 
 
 class SphereCursorGeometryBuilder(CursorGeometryBuilder):

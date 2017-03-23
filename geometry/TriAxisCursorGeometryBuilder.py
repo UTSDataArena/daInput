@@ -2,7 +2,7 @@ from cyclops import *
 from euclid import *
 from omega import *
 
-from daInput.cursor.geometry.CursorGeometryBuilder import CursorGeometryBuilder
+from daInput.geometry.CursorGeometryBuilder import CursorGeometryBuilder
 
 
 class TriAxisCursorGeometryBuilder(CursorGeometryBuilder):
