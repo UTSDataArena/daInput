@@ -13,7 +13,7 @@ class OptiTrackMocapCursor(MocapCursor):
     def __init__(self, id, user_id, geometry, mapping, ui_context):
         super(OptiTrackMocapCursor, self).__init__(id, user_id, geometry, ui_context)
 
-        #self.current = None
+        self.current = None
         self.mapping = mapping
 
     def on_move(self, event):
@@ -22,7 +22,13 @@ class OptiTrackMocapCursor(MocapCursor):
         x = self.mapping.map_x(position.x, position.z)
         y = self.mapping.map_y(position.y, position.z)
 
-        self.translate(x, y)
+        if self.current:
+            dx = self.current.x - x
+            dy = self.current.y - y
+
+            self.translate(dx, dy)
+
+        self.current = Vector2(x, y)
 
         #if self.current:
         #    dx = (self.current.x - event.getPosition().x) * OptiTrackMocapCursor.MOTION_MULTIPLIER
