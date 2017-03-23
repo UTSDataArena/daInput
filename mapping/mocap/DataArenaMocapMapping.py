@@ -42,8 +42,8 @@ class DataArenaMocapMapping(MocapMapping):
         # angle into a normalised position around the circumference of the data arena
         # display
 
-        angle = math.degrees(math.atan2(x, -z))
-        angle = angle if angle > 0 else 360 + angle
+        angle = math.degrees(math.atan2(-x, -z))
+        angle = 360 - angle if angle > 0 else -angle
 
         return angle * self.x_reciprocal
 
