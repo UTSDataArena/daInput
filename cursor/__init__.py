@@ -3,6 +3,5 @@ from .CustomGeometryCursor import CustomGeometryCursor
 from .CustomImageCursor import CustomImageCursor
 from .NormalisedCoordinatesCursor import NormalisedCoordinatesCursor
 from controller import *
-from geometry import *
 from mocap import *
 from pointer import *
