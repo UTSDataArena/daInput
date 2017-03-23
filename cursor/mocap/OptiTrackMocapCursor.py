@@ -10,7 +10,7 @@ class OptiTrackMocapCursor(MocapCursor):
 
     #MOTION_MULTIPLIER = 0.5   # scaling factor
 
-    def __init__(self, id, user_id, geometry, ui_context, mapping):
+    def __init__(self, id, user_id, geometry, mapping, ui_context):
         super(OptiTrackMocapCursor, self).__init__(id, user_id, geometry, ui_context)
 
         #self.current = None
