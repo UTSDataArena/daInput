@@ -1,5 +1,3 @@
-import math
-
 from cyclops import *
 from euclid import *
 from omega import *
