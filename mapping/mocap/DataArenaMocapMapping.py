@@ -59,8 +59,8 @@ class DataArenaMocapMapping(MocapMapping):
         elif y >= self.max_y:
             return MocapCursor.MAX_RANGE_VALUE
         else:
-            normalised_y = (y - self.min_y) * self.clamped_y_reciprocal
-            angle = math.degrees(math.atan2(normalised_y, abs(z)))
+            clamped_y = (y - self.min_y) * self.clamped_y_reciprocal
+            angle = math.degrees(math.atan2(clamped_y, abs(z)))
 
             return angle * 2 * self.y_reciprocal
 
