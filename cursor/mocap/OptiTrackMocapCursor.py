@@ -23,10 +23,12 @@ class OptiTrackMocapCursor(MocapCursor):
         y = self.mapping.map_y(position.y, position.z)
 
         if self.current:
-            dx = self.current.x - x
-            dy = self.current.y - y
+            dx = x - self.current
+            dy = y - self.current
+            #dx = self.current.x - x
+            #dy = self.current.y - y
 
-            self.translate(dx, dy)
+            self.translate(dx, -dy)  # invert the y-axis
 
         self.current = Vector2(x, y)
 
