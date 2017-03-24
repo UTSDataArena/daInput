@@ -32,7 +32,7 @@ class DataArenaMocapMapping(MocapMapping):
         self.max_y = max_y
 
         self.x_reciprocal = 1 / 360.0
-        self.y_reciprocal = 1 / 22.5
+        self.y_reciprocal = 1 / 90.0
 
         self.clamped_y_reciprocal = 1 / (self.max_y - self.min_y)
 
@@ -62,6 +62,6 @@ class DataArenaMocapMapping(MocapMapping):
             normalised_y = (y - self.min_y) * self.clamped_y_reciprocal
             angle = math.degrees(math.atan2(normalised_y, abs(z)))
 
-            return angle * self.y_reciprocal
+            return angle * 2 * self.y_reciprocal
 
 
