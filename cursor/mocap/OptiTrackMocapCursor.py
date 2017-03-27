@@ -8,37 +8,20 @@ from daInput.cursor.mocap.MocapCursor import MocapCursor
 
 class OptiTrackMocapCursor(MocapCursor):
 
-    #MOTION_MULTIPLIER = 0.5   # scaling factor
-
     def __init__(self, id, user_id, geometry, mapping, ui_context):
         super(OptiTrackMocapCursor, self).__init__(id, user_id, geometry, ui_context)
 
-        self.current = None
         self.mapping = mapping
 
     def on_move(self, event):
         position = event.getPosition()
 
-        x = self.mapping.map_x(position.x, position.z)
-        y = self.mapping.map_y(position.y, position.z)
+        if self.mapping.in_active_region(position):
 
-        if self.current:
-            dx = x - self.current
-            dy = y - self.current
-            #dx = self.current.x - x
-            #dy = self.current.y - y
+            x = self.mapping.map_x(position.x, position.z)
+            y = self.mapping.map_y(position.y)
 
-            self.translate(dx, -dy)  # invert the y-axis
-
-        self.current = Vector2(x, y)
-
-        #if self.current:
-        #    dx = (self.current.x - event.getPosition().x) * OptiTrackMocapCursor.MOTION_MULTIPLIER
-        #    dy = (self.current.y - event.getPosition().y) * OptiTrackMocapCursor.MOTION_MULTIPLIER
-
-        #    self.translate(dx, -dy)  # invert the y-axis
-
-        #self.current = Vector2(event.getPosition().x, event.getPosition().y)
+            self.move(x, y)
 
     def on_button_up(self, event):
         super(OptiTrackMocapCursor, self).on_button_up(event)

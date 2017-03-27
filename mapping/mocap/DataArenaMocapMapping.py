@@ -1,6 +1,5 @@
 import math
 
-from daInput.cursor.mocap.MocapCursor import MocapCursor
 from daInput.mapping.mocap.MocapMapping import MocapMapping
 
 
@@ -25,16 +24,14 @@ class DataArenaMocapMapping(MocapMapping):
     #   - x axis runs left to right, ranging in value from 0 to 1
     #   - y axis runs bottom to top, ranging in value from 0 to 1
 
-    def __init__(self, min_y=1.0, max_y=1.5):
+    def __init__(self, min_y=1.0, max_y=1.7):
         super(DataArenaMocapMapping, self).__init__()
 
         self.min_y = min_y
         self.max_y = max_y
 
         self.x_reciprocal = 1 / 360.0
-        self.y_reciprocal = 1 / 90.0
-
-        self.clamped_y_reciprocal = 1 / (self.max_y - self.min_y)
+        self.y_reciprocal = 1 / (self.max_y - self.min_y)
 
     def map_x(self, x, z):
 
@@ -47,21 +44,14 @@ class DataArenaMocapMapping(MocapMapping):
 
         return angle * self.x_reciprocal
 
-    def map_y(self, y, z):
+    def map_y(self, y):
 
         # we clamp the y position of the tracker coordinates to a normalised
         # vertical slice of the motion capture region within the data arena
-        # before calculating a polar angle and mapping it into a normalised height
-        # position on the data arena display
 
-        if y <= self.min_y:
-            return MocapCursor.MIN_RANGE_VALUE
-        elif y >= self.max_y:
-            return MocapCursor.MAX_RANGE_VALUE
-        else:
-            clamped_y = (y - self.min_y) * self.clamped_y_reciprocal
-            angle = math.degrees(math.atan2(clamped_y, abs(z)))
+        return (y - self.min_y) * self.y_reciprocal
 
-            return angle * 2 * self.y_reciprocal
+    def in_active_region(self, position):
+        return self.min_y <= position.y <= self.max_y
 
 

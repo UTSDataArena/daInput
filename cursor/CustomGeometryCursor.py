@@ -32,18 +32,20 @@ class CustomGeometryCursor(NormalisedCoordinatesCursor):
 
         return direction
 
-    def translate(self, dx, dy):
+    def move(self, x, y):
 
         translation = Vector3(0, 0, 0)
         coordinates = Vector2(self.coordinates.x, self.coordinates.y)
 
-        if NormalisedCoordinatesCursor.is_normalised(self.coordinates.x + dx):
-            coordinates.x = coordinates.x + dx
-            translation.x = dx * self.cursor_plane_width
+        delta = Vector2(x - self.coordinates.x, y - self.coordinates.y)
 
-        if NormalisedCoordinatesCursor.is_normalised(self.coordinates.y + dy):
-            coordinates.y = coordinates.y + dy
-            translation.y = dy * self.cursor_plane_height
+        if NormalisedCoordinatesCursor.is_normalised(x):
+            coordinates.x = x
+            translation.x = delta.x * self.cursor_plane_width
+
+        if NormalisedCoordinatesCursor.is_normalised(y):
+            coordinates.y = y
+            translation.y = delta.y * self.cursor_plane_height
 
         self.set_coordinates(coordinates)
         self.geometry.translate(translation, Space.World)

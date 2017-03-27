@@ -34,7 +34,7 @@ class SpaceNavControllerCursor(ControllerCursor):
             dy = event.getExtraDataFloat(1) * SpaceNavControllerCursor.MOTION_MULTIPLIER
 
             if abs(dx) >= SpaceNavControllerCursor.DAMPENING_FACTOR or abs(dy) >= SpaceNavControllerCursor.DAMPENING_FACTOR:
-                self.translate(dx, -dy)  # invert the y-axis
+                self.move(self.coordinates.x + dx, self.coordinates.y + dy)
 
     def on_button_up(self, event):
         super(SpaceNavControllerCursor, self).on_button_up(event)
