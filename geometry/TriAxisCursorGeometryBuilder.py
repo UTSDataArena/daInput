@@ -12,6 +12,7 @@ class TriAxisCursorGeometryBuilder(CursorGeometryBuilder):
     DEFAULT_RADIUS2 = 0.01
     DEFAULT_SUBDIVISIONS = 1
     DEFAULT_SIDES = 16
+    DEFAULT_EFFECT = 'colored -d green'
 
     def __init__(self):
         super(CursorGeometryBuilder, self).__init__()
@@ -21,6 +22,7 @@ class TriAxisCursorGeometryBuilder(CursorGeometryBuilder):
         self.radius2 = TriAxisCursorGeometryBuilder.DEFAULT_RADIUS2
         self.subdivisions = TriAxisCursorGeometryBuilder.DEFAULT_SUBDIVISIONS
         self.sides = TriAxisCursorGeometryBuilder.DEFAULT_SIDES
+        self.effect = TriAxisCursorGeometryBuilder.DEFAULT_EFFECT
 
     def set_length(self, length):
         self.length = length
@@ -42,6 +44,10 @@ class TriAxisCursorGeometryBuilder(CursorGeometryBuilder):
         self.sides = sides
         return self
 
+    def set_effect(self, effect):
+        self.effect = effect
+        return self
+
     def build(self):
 
         x = CylinderShape.create(self.length, self.radius1, self.radius2, self.subdivisions, self.sides)
@@ -57,15 +63,15 @@ class TriAxisCursorGeometryBuilder(CursorGeometryBuilder):
 
         half_length = self.length * 0.5
 
-        x.setEffect('colored -d red')
+        x.setEffect(self.effect)
         x.translate(Vector3(-half_length, 0, 0), Space.Local)
         x.rotate(Vector3(0, 1, 0), math.radians(90), Space.Parent)
 
-        y.setEffect('colored -d green')
+        y.setEffect(self.effect)
         y.translate(Vector3(0, -half_length, 0), Space.Local)
         y.rotate(Vector3(1, 0, 0), math.radians(-90), Space.Parent)
 
-        z.setEffect('colored -d blue')
+        z.setEffect(self.effect)
         z.translate(Vector3(0, 0, -half_length), Space.Local)
 
         return cursor
