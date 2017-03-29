@@ -28,6 +28,8 @@ class UiContext(object):
         self.pointer = MousePointerCursor('mouse')
         self.cursors = []
 
+        self.ui = UiModule.createAndInitialize()
+
     def get_cursor(self, event):
         for cursor in self.cursors:
             if cursor.get_user_id() == event.getUserId():
