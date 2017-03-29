@@ -33,6 +33,12 @@ class DataArenaMocapMapping(MocapMapping):
         self.x_reciprocal = 1 / 360.0
         self.y_reciprocal = 1 / (self.max_y - self.min_y)
 
+        # keep track of current set of mapped values for diagnostics purposes:
+
+        self.x = 0.0
+        self.y = 0.0
+        self.angle = 0
+
     def map_x(self, x, z):
 
         # we calculate the polar angle of the tracker x-z coordinates and map this
@@ -42,14 +48,19 @@ class DataArenaMocapMapping(MocapMapping):
         angle = math.degrees(math.atan2(-x, -z))
         angle = 360 - angle if angle > 0 else -angle
 
-        return angle * self.x_reciprocal
+        self.angle = angle
+        self.x = angle * self.x_reciprocal
+
+        return self.x
 
     def map_y(self, y):
 
         # we clamp the y position of the tracker coordinates to a normalised
         # vertical slice of the motion capture region within the data arena
 
-        return (y - self.min_y) * self.y_reciprocal
+        self.y = (y - self.min_y) * self.y_reciprocal
+
+        return self.y
 
     def in_active_region(self, position):
         return self.min_y <= position.y <= self.max_y
