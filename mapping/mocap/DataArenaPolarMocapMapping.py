@@ -3,7 +3,7 @@ import math
 from daInput.mapping.mocap.MocapMapping import MocapMapping
 
 
-class DataArenaMocapMapping(MocapMapping):
+class DataArenaPolarMocapMapping(MocapMapping):
 
     # The purpose of this mapping is to convert three dimensional values in the
     # motion capture coordinate system into a two dimensional normalised space.
@@ -25,7 +25,7 @@ class DataArenaMocapMapping(MocapMapping):
     #   - y axis runs bottom to top, ranging in value from 0 to 1
 
     def __init__(self, min_y=1.0, max_y=1.7):
-        super(DataArenaMocapMapping, self).__init__()
+        super(DataArenaPolarMocapMapping, self).__init__()
 
         self.min_y = min_y
         self.max_y = max_y
