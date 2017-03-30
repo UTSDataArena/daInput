@@ -1,5 +1,3 @@
-import math
-
 from daInput.mapping.mocap.MocapMapping import MocapMapping
 
 
