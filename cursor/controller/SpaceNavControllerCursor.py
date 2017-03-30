@@ -32,9 +32,10 @@ class SpaceNavControllerCursor(ControllerCursor):
 
             dx = event.getExtraDataFloat(0) * SpaceNavControllerCursor.MOTION_MULTIPLIER
             dy = event.getExtraDataFloat(1) * SpaceNavControllerCursor.MOTION_MULTIPLIER
+            dz = event.getExtraDataItems(2) * SpaceNavControllerCursor.MOTION_MULTIPLIER
 
-            if abs(dx) >= SpaceNavControllerCursor.DAMPENING_FACTOR or abs(dy) >= SpaceNavControllerCursor.DAMPENING_FACTOR:
-                self.move(self.coordinates.x + dx, self.coordinates.y + dy)
+            if abs(dx) >= SpaceNavControllerCursor.DAMPENING_FACTOR or abs(dy) >= SpaceNavControllerCursor.DAMPENING_FACTOR or abs(dz) >= SpaceNavControllerCursor.DAMPENING_FACTOR:
+                self.move(self.coordinates.x + dx, self.coordinates.y + dy, self.coordinates.z + dz)
 
     def on_button_up(self, event):
         super(SpaceNavControllerCursor, self).on_button_up(event)

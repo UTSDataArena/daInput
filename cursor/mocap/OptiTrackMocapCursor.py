@@ -18,10 +18,11 @@ class OptiTrackMocapCursor(MocapCursor):
 
         if self.mapping.in_active_region(position):
 
-            x = self.mapping.map_x(position.x, position.z)
+            x = self.mapping.map_x(position.x)
             y = self.mapping.map_y(position.y)
+            z = self.mapping.map_z(position.z)
 
-            self.move(x, y)
+            self.move(x, y, z)
 
     def on_button_up(self, event):
         super(OptiTrackMocapCursor, self).on_button_up(event)

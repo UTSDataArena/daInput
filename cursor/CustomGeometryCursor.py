@@ -8,7 +8,7 @@ from daInput.cursor.NormalisedCoordinatesCursor import NormalisedCoordinatesCurs
 
 class CustomGeometryCursor(NormalisedCoordinatesCursor):
 
-    def __init__(self, id, user_id, geometry, ui_context):
+    def __init__(self, id, user_id, geometry, ui_context, cursor_plane_width=8.0, cursor_plane_height=None, cursor_plane_depth=8.0):
         super(CustomGeometryCursor, self).__init__(id)
 
         self.user_id = user_id
@@ -16,8 +16,9 @@ class CustomGeometryCursor(NormalisedCoordinatesCursor):
 
         self.ui_context = ui_context
 
-        self.cursor_plane_height = abs(2.0 * self.geometry.getPosition().z * math.tan(math.radians(self.ui_context.fov * 0.5)))
-        self.cursor_plane_width = self.cursor_plane_height * self.ui_context.aspect
+        self.cursor_plane_height = cursor_plane_height if cursor_plane_height else abs(2.0 * self.geometry.getPosition().z * math.tan(math.radians(self.ui_context.fov * 0.5)))
+        self.cursor_plane_width = cursor_plane_width
+        self.cursor_plane_depth = cursor_plane_depth
 
     def get_user_id(self):
         return self.user_id
@@ -32,12 +33,12 @@ class CustomGeometryCursor(NormalisedCoordinatesCursor):
 
         return direction
 
-    def move(self, x, y):
+    def move(self, x, y, z):
 
         translation = Vector3(0, 0, 0)
-        coordinates = Vector2(self.coordinates.x, self.coordinates.y)
+        coordinates = Vector3(self.coordinates.x, self.coordinates.y, self.coordinates.z)
 
-        delta = Vector2(x - self.coordinates.x, y - self.coordinates.y)
+        delta = Vector3(x - self.coordinates.x, y - self.coordinates.y, z - self.coordinates.z)
 
         if NormalisedCoordinatesCursor.is_normalised(x):
             coordinates.x = x
@@ -46,6 +47,10 @@ class CustomGeometryCursor(NormalisedCoordinatesCursor):
         if NormalisedCoordinatesCursor.is_normalised(y):
             coordinates.y = y
             translation.y = delta.y * self.cursor_plane_height
+
+        if NormalisedCoordinatesCursor.is_normalised(z):
+            coordinates.z = z
+            translation.z = delta.z * self.cursor_plane_depth
 
         self.set_coordinates(coordinates)
         self.geometry.translate(translation, Space.World)
