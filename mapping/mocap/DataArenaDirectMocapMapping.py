@@ -38,7 +38,7 @@ class DataArenaDirectMocapMapping(MocapMapping):
         # convert the z position of the tracker coordinates to a normalised
         # value
 
-        return (z + self.max_z) * self.z_reciprocal
+        return (-z + self.max_z) * self.z_reciprocal
 
     def in_active_region(self, position):
         return self.min_y <= position.y <= self.max_y
