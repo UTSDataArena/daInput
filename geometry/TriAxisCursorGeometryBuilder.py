@@ -7,6 +7,7 @@ from daInput.geometry.CursorGeometryBuilder import CursorGeometryBuilder
 
 class TriAxisCursorGeometryBuilder(CursorGeometryBuilder):
 
+    DEFAULT_NAME = 'cursor'
     DEFAULT_LENGTH = 0.25
     DEFAULT_RADIUS1 = 0.01
     DEFAULT_RADIUS2 = 0.01
@@ -17,12 +18,17 @@ class TriAxisCursorGeometryBuilder(CursorGeometryBuilder):
     def __init__(self):
         super(CursorGeometryBuilder, self).__init__()
 
+        self.name = TriAxisCursorGeometryBuilder.DEFAULT_NAME
         self.length = TriAxisCursorGeometryBuilder.DEFAULT_LENGTH
         self.radius1 = TriAxisCursorGeometryBuilder.DEFAULT_RADIUS1
         self.radius2 = TriAxisCursorGeometryBuilder.DEFAULT_RADIUS2
         self.subdivisions = TriAxisCursorGeometryBuilder.DEFAULT_SUBDIVISIONS
         self.sides = TriAxisCursorGeometryBuilder.DEFAULT_SIDES
         self.effect = TriAxisCursorGeometryBuilder.DEFAULT_EFFECT
+
+    def set_name(self, name):
+        self.name = name
+        return self
 
     def set_length(self, length):
         self.length = length
@@ -54,7 +60,7 @@ class TriAxisCursorGeometryBuilder(CursorGeometryBuilder):
         y = CylinderShape.create(self.length, self.radius1, self.radius2, self.subdivisions, self.sides)
         z = CylinderShape.create(self.length, self.radius1, self.radius2, self.subdivisions, self.sides)
 
-        cursor = SceneNode.create('cursor')
+        cursor = SceneNode.create(self.name)
         cursor.setPosition(self.position[0], self.position[1], self.position[2])
 
         cursor.addChild(x)
