@@ -8,9 +8,7 @@ from daInput.cursor.NormalisedCoordinatesCursor import NormalisedCoordinatesCurs
 
 class CustomGeometryCursor(NormalisedCoordinatesCursor):
 
-    MOTION_MULTIPLIER = 4
-
-    def __init__(self, id, user_id, geometry, ui_context, cursor_plane_width=8.0, cursor_plane_height=None, cursor_plane_depth=8.0):
+    def __init__(self, id, user_id, geometry, ui_context, cursor_plane_width=8.0, cursor_plane_height=None, cursor_plane_depth=8.0, motion_multiplier=1):
         super(CustomGeometryCursor, self).__init__(id)
 
         self.user_id = user_id
@@ -19,8 +17,8 @@ class CustomGeometryCursor(NormalisedCoordinatesCursor):
         self.ui_context = ui_context
 
         self.cursor_plane_height = cursor_plane_height if cursor_plane_height else abs(2.0 * self.geometry.getPosition().z * math.tan(math.radians(self.ui_context.fov * 0.5)))
-        self.cursor_plane_width = cursor_plane_width * CustomGeometryCursor.MOTION_MULTIPLIER
-        self.cursor_plane_depth = cursor_plane_depth * CustomGeometryCursor.MOTION_MULTIPLIER
+        self.cursor_plane_width = cursor_plane_width * motion_multiplier
+        self.cursor_plane_depth = cursor_plane_depth * motion_multiplier
 
     def get_user_id(self):
         return self.user_id
