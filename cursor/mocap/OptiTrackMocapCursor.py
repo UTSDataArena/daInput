@@ -8,8 +8,10 @@ from daInput.cursor.mocap.MocapCursor import MocapCursor
 
 class OptiTrackMocapCursor(MocapCursor):
 
+    MOTION_MULTIPLIER = 4
+
     def __init__(self, id, user_id, geometry, mapping, ui_context):
-        super(OptiTrackMocapCursor, self).__init__(id, user_id, geometry, ui_context)
+        super(OptiTrackMocapCursor, self).__init__(id, user_id, geometry, ui_context, OptiTrackMocapCursor.MOTION_MULTIPLIER)
 
         self.is_active = False
 

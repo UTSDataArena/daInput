@@ -16,8 +16,8 @@ class MocapCursor(CustomGeometryCursor):
     def is_interested(event):
         return event.getServiceType() == ServiceType.Mocap
 
-    def __init__(self, id, user_id, geometry, ui_context):
-        super(MocapCursor, self).__init__(id, user_id, geometry, ui_context)
+    def __init__(self, id, user_id, geometry, ui_context, motion_multiplier):
+        super(MocapCursor, self).__init__(id, user_id, geometry, ui_context, motion_multiplier=motion_multiplier)
 
         # motion capture tracking markers have no button, so we simulate a button
         # press by turning the tracking marker upside down and keeping track of
