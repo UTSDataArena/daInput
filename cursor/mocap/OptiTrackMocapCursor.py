@@ -24,9 +24,9 @@ class OptiTrackMocapCursor(MocapCursor):
         if self.mapping.in_active_region(position):
 
             if not self.is_active:
-                # we re-position the origin to wherever the user happens to be when the cursor enters the active region
+                # we re-position the xz origin to wherever the user happens to be when the cursor enters the active region
 
-                self.origin = Vector3(position.x, position.y, 0)
+                self.origin = Vector3(position.x, 0, position.z)
                 self.set_coordinates(Vector3(OptiTrackMocapCursor.MAX_RANGE_VALUE * 0.5, OptiTrackMocapCursor.MAX_RANGE_VALUE * 0.5, self.coordinates.z))
 
                 self.is_active = True
