@@ -35,8 +35,8 @@ class DataArenaDirectMocapMapping(MocapMapping):
 
     def map_z(self, z):
 
-        # convert the z position of the tracker coordinates to a normalised
-        # value
+        # flip the z position of the tracker coordinates and convert to a
+        # normalised value
 
         return (-z + self.max_z) * self.z_reciprocal
 
