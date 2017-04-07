@@ -40,7 +40,7 @@ class MocapCursor(CustomGeometryCursor):
 
     def on_event(self, event):
 
-        if MocapCursor.is_interested(event) and event.getType() == EventType.Update:
+        if MocapCursor.is_interested(event) and event.getUserId() == self.get_user_id() and event.getType() == EventType.Update:
 
             orientation = event.getOrientation() * Vector3(0, 1, 0)
 
