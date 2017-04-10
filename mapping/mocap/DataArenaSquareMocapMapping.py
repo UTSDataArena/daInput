@@ -7,7 +7,7 @@ class DataArenaSquareMocapMapping(MocapMapping):
     # space of the associated 3D scene.
 
     def __init__(self, min_x=-4.0, max_x=4.0, min_y=1.0, max_y=1.7, max_z=4.0, min_z=-4.0):
-        super(DataArenaDirectMocapMapping, self).__init__()
+        super(DataArenaSquareMocapMapping, self).__init__()
 
         self.min_y = min_y
         self.max_y = max_y
