@@ -20,7 +20,7 @@ class NormalisedCoordinatesCursor(Cursor):
     def __init__(self, id):
         super(NormalisedCoordinatesCursor, self).__init__(id)
 
-        self.coordinates = Vector2(NormalisedCoordinatesCursor.MAX_RANGE_VALUE / 2.0, NormalisedCoordinatesCursor.MAX_RANGE_VALUE / 2.0)
+        self.coordinates = Vector3(NormalisedCoordinatesCursor.MAX_RANGE_VALUE * 0.5, NormalisedCoordinatesCursor.MAX_RANGE_VALUE * 0.5, NormalisedCoordinatesCursor.MAX_RANGE_VALUE * 0.5)
 
     def get_coordinates(self):
         return self.coordinates
