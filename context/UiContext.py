@@ -9,10 +9,10 @@ class UiContext(object):
 
     DEFAULT_CAMERA_FOV = 34.7
 
-    def __init__(self):
+    def __init__(self, fov=DEFAULT_CAMERA_FOV):
         super(UiContext, self).__init__()
 
-        self.fov = UiContext.DEFAULT_CAMERA_FOV
+        self.fov = fov
 
         self.pointer = MousePointerCursor('mouse')
         self.cursors = []
