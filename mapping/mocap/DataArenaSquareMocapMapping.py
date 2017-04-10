@@ -1,7 +1,10 @@
 from daInput.mapping.mocap.MocapMapping import MocapMapping
 
 
-class DataArenaDirectMocapMapping(MocapMapping):
+class DataArenaSquareMocapMapping(MocapMapping):
+
+    # Map motion in the data arena along x and z axes directly into the coordinate
+    # space of the associated 3D scene.
 
     def __init__(self, min_x=-4.0, max_x=4.0, min_y=1.0, max_y=1.7, max_z=4.0, min_z=-4.0):
         super(DataArenaDirectMocapMapping, self).__init__()

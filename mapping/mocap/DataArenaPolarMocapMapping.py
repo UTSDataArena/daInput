@@ -5,6 +5,17 @@ from daInput.mapping.mocap.MocapMapping import MocapMapping
 
 class DataArenaPolarMocapMapping(MocapMapping):
 
+    # Map motion in the data arena along x and z axes into polar coordinates which
+    # are normalised and mapped to the surface of the data arena display.
+    #
+    # If we imagine a seam running top to bottom through the data arena display
+    # directly behind the user, and were to unwrap the sides of the cylindrical
+    # arena display to form a flat rectangle in front of the user, then the normalised
+    # coordinates would be laid out as follows:
+    #
+    #   - x axis runs left to right, ranging in value from 0 to 1
+    #   - y axis runs bottom to top, ranging in value from 0 to 1
+
     def __init__(self, min_y=1.0, max_y=1.7):
         super(DataArenaPolarMocapMapping, self).__init__()
 

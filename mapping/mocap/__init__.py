@@ -1,3 +1,3 @@
 from .MocapMapping import MocapMapping
-from .DataArenaDirectMocapMapping import DataArenaDirectMocapMapping
 from .DataArenaPolarMocapMapping import DataArenaPolarMocapMapping
+from .DataArenaSquareMocapMapping import DataArenaSquareMocapMapping
