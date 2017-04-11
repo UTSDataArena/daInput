@@ -18,6 +18,14 @@ class OptiTrackMocapCursor(MocapCursor):
         self.mapping = mapping
         self.origin = Vector3(0, 0, 0)
 
+    def get_origin(self):
+        """
+        Return the currently defined origin of the cursor in the coordinate space
+        of the motion capture tracking system (normally these coordinates correspond
+        to the physical dimensions of the mocap environment)
+        """
+        return self.origin
+
     def on_move(self, event):
         position = event.getPosition()
 

@@ -23,6 +23,10 @@ class NormalisedCoordinatesCursor(Cursor):
         self.coordinates = Vector3(NormalisedCoordinatesCursor.MAX_RANGE_VALUE * 0.5, NormalisedCoordinatesCursor.MAX_RANGE_VALUE * 0.5, NormalisedCoordinatesCursor.MAX_RANGE_VALUE * 0.5)
 
     def get_coordinates(self):
+        """
+        Return the normalised coordinates which represent the current position of
+        the cursor within a "uv" space that defines the total display area.
+        """
         return self.coordinates
 
     def set_coordinates(self, coordinates):
